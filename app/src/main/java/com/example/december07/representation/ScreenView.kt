@@ -6,6 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.december07.domain.model.Person
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.toList
 
 class ScreenView:ViewModel() {
 
@@ -15,8 +18,7 @@ class ScreenView:ViewModel() {
 
 
 
-
-    fun changeValue(event: ScreenEvent){
+     fun changeValue(event: ScreenEvent){
 
         when(event){
 
@@ -37,10 +39,18 @@ class ScreenView:ViewModel() {
             }
             ScreenEvent.addList->{
                 if (_state.name.isNotEmpty() and _state.surnmae.isNotEmpty() and _state.phoneNumber.isNotEmpty()){
-                    val listperson=_state.listPerson
-                    listperson.contains(Person(_state.name,_state.surnmae,_state.phoneNumber))
+                    var listPerson:List<Person> = emptyList()
+                    state.listPerson.map {
+                        listPerson=it
+                    }
+
+                    listPerson.contains(Person(_state.name,_state.surnmae,_state.phoneNumber))
+
+
                     _state=_state.copy(
-                        listPerson = listperson
+                        listPerson = flow {
+                            emit(listPerson)
+                        }
                     )
                 }
                 else{
