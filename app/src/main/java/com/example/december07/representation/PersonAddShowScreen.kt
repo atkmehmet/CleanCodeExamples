@@ -22,17 +22,12 @@ fun mainScreen(view: ScreenView,onEvent:(ScreenEvent)->Unit){
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(16.dp)) {
-        if (view.state.error!=""){
-            TextField(value =view.state.error ,
-                onValueChange ={onEvent(ScreenEvent.nameValue(it))},
-                placeholder = {"Please name Value"} )
-        }
-        else
-        {
+
+
             TextField(value =view.state.name ,
                 onValueChange ={onEvent(ScreenEvent.nameValue(it))},
                 placeholder = {"Please name Value"} )
-        }
+
 
 
         TextField(value =view.state.surnmae ,
@@ -42,22 +37,22 @@ fun mainScreen(view: ScreenView,onEvent:(ScreenEvent)->Unit){
         TextField(value =view.state.phoneNumber ,
             onValueChange ={onEvent(ScreenEvent.phoneValue(it))},
             placeholder = {"Please phone Value"} )
+
+        TextField(value =view.state.error ,
+            onValueChange ={onEvent(ScreenEvent.phoneValue(it))},
+            placeholder = {"Please phone Value"} )
+
         Button(onClick = { onEvent(ScreenEvent.addList) }) {
             Text(text = "Add List")
         }
         LazyColumn{
-            var persons:List<Person> = listOf(
-                Person("Mehmet","Durmaz","0988777")
-            )
-            items(persons){
-                    person->detailsPerson(person.name,person.surname,person.phoneNumber,view::changeValue)
+             val list=view.listItem.value
+            items(view.listItem.value){
+                    person->
+                detailsPerson(person.name,person.surname,person.phoneNumber,view::changeValue)
             }
         }
-
-
     }
-
-
 
     }
 

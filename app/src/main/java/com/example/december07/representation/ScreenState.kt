@@ -9,5 +9,4 @@ data class ScreenState (
     val surnmae:String="",
     val phoneNumber:String="",
     val error:String="",
-    val listPerson: Flow<List<Person>> = emptyFlow<List<Person>>()
 )
